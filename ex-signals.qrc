@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>tracking.qml</file>
+        <file>content/InfoBar.qml</file>
+        <file>content/Button.qml</file>
+        <file>content/SerialButtonBar.qml</file>
+        <file>content/SensorBar.qml</file>
+        <file>content/Sensor.qml</file>
+        <file>content/sound/Todesschrei.mp3</file>
+        <file>content/sound/schreiweib.mp3</file>
+        <file>content/sound/Schnarchen01.mp3</file>
+        <file>content/sound/Schluckauf.mp3</file>
+        <file>content/sound/panik.mp3</file>
+        <file>content/sound/babycry.mp3</file>
+        <file>content/Bullet.qml</file>
+        <file>content/images/background.png</file>
+        <file>content/images/background-puzzle.png</file>
+        <file>content/images/bar.png</file>
+        <file>content/images/blue.png</file>
+        <file>content/images/but-game-new.png</file>
+        <file>content/images/but-menu.png</file>
+        <file>content/images/green.png</file>
+        <file>content/images/red.png</file>
+        <file>content/images/yellow.png</file>
+    </qresource>
+</RCC>
