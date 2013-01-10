@@ -1,12 +1,13 @@
 import QtQuick 2.0
-
+import "../settings.js" as Settings
 Rectangle {
     id: container
-    width: 100
-    height: 64
+    width: Settings.toolButtonWidth
+    height: Settings.toolButtonHeight
     color:"green"
     property string label:"default"
     signal clicked()
+
     anchors.margins: 10
     /*Image{
         id: img

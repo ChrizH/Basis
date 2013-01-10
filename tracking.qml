@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Shapes 3.0
+import "settings.js" as Settings
 import "content"
 
 Item {
@@ -22,13 +23,28 @@ Item {
     }
 
     InfoBar{
-        anchors.top:container.Top
+        id: headerBar
+        anchors.top: container.top
         anchors.topMargin: 10
         width: parent.width
     }
 
+    GameCanvas{
+        id: gameCanvas
+        z: 1
+        width: parent.width
+        height: parent.height/1.5
+        anchors.centerIn: parent
+    }
+    Menu{
+        y: Settings.headerHeight
+        width: parent.width/1.6
+        height: parent.height - Settings.headerHeight - Settings.footerHeight
+        anchors.top: headerBar.bottom
+    }
+
     SensorBar{
-        id: sensors
+        id: bottomBar
         width: container.width
         anchors.centerIn: container
     }
@@ -60,9 +76,12 @@ Item {
     }*/
 
     SerialButtonBar{
+        id: serialButtons
         anchors.horizontalCenter: parent.Center
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 10
         width: parent.width
     }
+
+
 }

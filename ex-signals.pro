@@ -33,4 +33,6 @@ OTHER_FILES += \
     content/images/green.png \
     content/images/red.png \
     content/images/yellow.png \
-    content/GameCanvas.qml
+    content/GameCanvas.qml \
+    settings.js \
+    content/Menu.qml

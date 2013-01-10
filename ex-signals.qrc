@@ -22,5 +22,8 @@
         <file>content/images/green.png</file>
         <file>content/images/red.png</file>
         <file>content/images/yellow.png</file>
+        <file>settings.js</file>
+        <file>content/GameCanvas.qml</file>
+        <file>content/Menu.qml</file>
     </qresource>
 </RCC>

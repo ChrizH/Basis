@@ -36,6 +36,10 @@ Item {
             //    text: (audio.hasAudio==true?":)":":(")
             }
         }
+        Button{
+            label: "Open Menu"
+            //onClicked:
+        }
 
     }
 

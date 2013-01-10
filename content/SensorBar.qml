@@ -1,10 +1,10 @@
 import QtQuick 2.0
 import QtMultimedia 5.0
-
+import "../settings.js" as Settings
 Item {
     //anchors.centerIn: parent
     //anchors.horizontalCenter: parent.horizontalCenter
-    height: 300
+    height: Settings.footerHeight
     //color: "black"
     Row{
         anchors.centerIn: parent
