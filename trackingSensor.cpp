@@ -152,6 +152,14 @@ void TrackingSensor::setConnectionStatus(const bool &newValue){
         emit connectionAvailableChanged();
     }
 }
+void TrackingSensor::setTrackingEnable(const bool &newValue){
+    if (m_trackingEnable != newValue) {
+        m_trackingEnable = newValue;
+        if(m_trackingEnable)
+            closeConnection();
+        emit trackingEnableChanged();
+    }
+}
 
 
 void TrackingSensor::setLeftSensor(const int &newValue){
@@ -183,6 +191,10 @@ const int  TrackingSensor::leftSensor()const{
 }
 const int TrackingSensor::rightSensor()const{
     return m_right;
+}
+
+const bool TrackingSensor::trackingEnable()const{
+    return this->m_trackingEnable;
 }
 
 

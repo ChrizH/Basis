@@ -3,12 +3,14 @@ QT       += multimedia
 HEADERS   = ellipseitem.h \
     sensor.h \
     serial.h \
-    trackingSensor.h
+    trackingSensor.h \
+    game.h
 RESOURCES = ex-signals.qrc
 SOURCES   = main.cpp ellipseitem.cpp \
     sensor.cpp \
     serial.cpp \
-    trackingSensor.cpp
+    trackingSensor.cpp \
+    game.cpp
 
 # These next three lines makes the QML files show up in a section of their
 # own in Qt Creator.
@@ -20,7 +22,6 @@ QT+=serialport
 OTHER_FILES += \
     content/Button.qml \
     content/InfoBar.qml \
-    content/SerialButtonBar.qml \
     content/Sensor.qml \
     content/SensorBar.qml \
     content/Bullet.qml \
@@ -35,4 +36,8 @@ OTHER_FILES += \
     content/images/yellow.png \
     content/GameCanvas.qml \
     settings.js \
-    content/Menu.qml
+    content/Menu.qml \
+    content/BottomBar.qml \
+    content/logic.js \
+    content/Switch.qml \
+    content/Player.qml

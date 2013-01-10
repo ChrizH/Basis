@@ -15,6 +15,8 @@
 #
 #include <QtQml>
 
+void initialize();
+void mainLoop();
 
 int main(int argc, char *argv[])
 {
@@ -30,4 +32,10 @@ int main(int argc, char *argv[])
     view->setSource(QUrl("qrc:///tracking.qml"));
     view->show();
     return app.exec();
+}
+
+void mainLoop(){
+    while(1) {
+        sleep(1/30);
+    }
 }

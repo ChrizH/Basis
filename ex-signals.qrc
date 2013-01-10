@@ -3,7 +3,6 @@
         <file>tracking.qml</file>
         <file>content/InfoBar.qml</file>
         <file>content/Button.qml</file>
-        <file>content/SerialButtonBar.qml</file>
         <file>content/SensorBar.qml</file>
         <file>content/Sensor.qml</file>
         <file>content/sound/Todesschrei.mp3</file>
@@ -25,5 +24,11 @@
         <file>settings.js</file>
         <file>content/GameCanvas.qml</file>
         <file>content/Menu.qml</file>
+        <file>content/BottomBar.qml</file>
+        <file>content/logic.js</file>
+        <file>content/Switch.qml</file>
+        <file>content/images/knob.png</file>
+        <file>content/images/switch-background.png</file>
+        <file>content/Player.qml</file>
     </qresource>
 </RCC>
