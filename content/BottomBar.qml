@@ -33,10 +33,14 @@ Item {
             id:menuButton
             label: "Open Menu"
             onClicked:{
-                if(parent.state=="open")
+
+                if(parent.state=="open"){
                    container.closeMenu()
-                else
+                }
+                else{
                     container.openMenu()
+                    _gameEngine.setGameOn(false)
+                }
                 parent.state == "open" ? parent.state = "close" : parent.state ="open"
 
             }
@@ -45,13 +49,13 @@ Item {
 
         Button{
             id: startGame
-            label: "Start Game"
+            label: _gameEngine.gameOn == true ? "Pause":"Continue"
             onClicked: {
                 _gameEngine.setGameOn(!_gameEngine.gameOn)
             }
         }
 
-        state:"open"
+        state:"close"
         states:[
             State{
                 name:"open"

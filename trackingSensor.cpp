@@ -1,5 +1,6 @@
 #include "trackingSensor.h"
 const qint32 baudrate = 115200;
+#include <math.h>
 
 TrackingSensor::TrackingSensor(QObject *parent)
     :QObject(parent)
@@ -95,22 +96,46 @@ void TrackingSensor::readData()
         data = value->toUtf8();
     }
 
+    double scale = 1000.0;
+    int minLeft = 289, minRight=253, minBottom=321;
+    int maxLeft = 330, maxRight=270, maxBottom=370;
+
+    int calcVal = data.toInt();
 
     switch(this->m_sensorCounter){
         case 0:     // x    left
             m_sensorCounter++;
-            this->setLeftSensor(data.toInt());
-            qDebug() << "Left: " << data.toInt();
+            //this->setLeftSensor(int(sqrt(scale/data.toDouble())));
+            if(calcVal > maxLeft)
+                calcVal=maxLeft;
+
+            calcVal -= minLeft;
+            if(calcVal<=0)
+                calcVal = 1;
+            this->setLeftSensor(int(sqrt(scale/(double)calcVal)));
+            qDebug() << "Left: " << calcVal;
             break;
         case 1:     // y    bottm
             m_sensorCounter++;
-            this->setBottomSensor(data.toInt());
-            qDebug() << "Bottom: " << data.toInt();
+            //this->setBottomSensor(int(sqrt(scale/data.toDouble())));
+            if(calcVal > maxBottom)
+                calcVal=maxBottom;
+            calcVal -= minBottom;
+            if(calcVal<=0)
+                calcVal = 1;
+            this->setBottomSensor(int(sqrt(scale/(double)calcVal)));
+            qDebug() << "Bottom: " << calcVal;
             break;
         case 2:     // z    right
             m_sensorCounter=0;
-            this->setRightSensor(data.toInt());
-            qDebug() << "Right: " << data.toInt();
+            //this->setRightSensor(int(sqrt(scale/data.toDouble())));
+            if(calcVal > maxRight)
+                calcVal=maxRight;
+            calcVal -= minRight;
+            if(calcVal<=0)
+                calcVal = 1;
+            this->setRightSensor(int(sqrt(scale/(double)calcVal)));
+            qDebug() << "Right: " << calcVal;
             break;
         default:
             m_sensorCounter=0;

@@ -1,7 +1,7 @@
 import QtQuick 2.0
 
 Item {
-    height: childrenRect.height
+    //height: childrenRect.height
     //width: 100
     //height: 62
 
@@ -26,9 +26,17 @@ Item {
 
 
         }
-        Text{
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: "Game On: "+(_gameEngine.gameOn == true ? "true":"false")
+        Row{
+            anchors.centerIn: parent
+            spacing: 10
+            Text{
+                text: "Game On: "+(_gameEngine.gameOn == true ? "true":"false")
+                font.bold: true
+            }
+            Text{
+                text: "Controller: "+(_gameEngine.trackingEnable == true ? "Sensor":"Mouse")
+                font.bold: true
+            }
         }
 
        Row{

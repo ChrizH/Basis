@@ -24,6 +24,7 @@ Item {
         anchors.top: container.top
         anchors.topMargin: 10
         width: parent.width
+        height: Settings.headerHeight
     }
 
     GameCanvas{
@@ -40,6 +41,7 @@ Item {
         height: parent.height - Settings.headerHeight - Settings.footerHeight
         anchors.top: headerBar.bottom
         anchors.horizontalCenter: parent.horizontalCenter
+        visible: false
     }
 
 
