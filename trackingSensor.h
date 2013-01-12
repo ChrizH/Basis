@@ -23,7 +23,7 @@ class TrackingSensor : public QObject
     Q_PROPERTY(int leftSensor READ leftSensor WRITE setLeftSensor NOTIFY leftSensorChanged)
     Q_PROPERTY(int rightSensor READ rightSensor WRITE setRightSensor NOTIFY rightSensorChanged)
     Q_PROPERTY(int bottomSensor READ bottomSensor WRITE setBottomSensor NOTIFY bottomSensorChanged)
-    Q_PROPERTY(bool trackingEnable READ trackingEnable WRITE setTrackingEnable NOTIFY trackingEnableChanged)
+
 public:
     TrackingSensor(QObject *parent=0);
     ~TrackingSensor();
@@ -46,7 +46,7 @@ public:
     const QString sensorValue() const;
     const bool connectionAvailable() const;
     const bool comportAvailable() const;
-    const bool trackingEnable()const;
+
 
     void setSensorValue(const QString &newValue);
 
@@ -54,7 +54,7 @@ public:
     void setComportAvailable(const bool &newValue);
     void setConnectionStatus(const bool &newValue);
 public slots:
-    void setTrackingEnable(const bool &newValue);
+
     // methods for serialcommunication
 
     void setupConnection();         // TODO: send a start command to µC
@@ -67,7 +67,7 @@ signals:
     void leftSensorChanged();
     void rightSensorChanged();
     void bottomSensorChanged();
-    void trackingEnableChanged();
+
 
     // communication changed
     void connectionAvailableChanged();
@@ -80,11 +80,14 @@ private:
     int m_right;    // z
     QString m_sensorValue;
 
-    bool m_trackingEnable;
+
     bool m_comPortAvailable;
     bool m_connectionAvailable;
     int m_sensorCounter;    // readData -> 1 read cycle: 3
     SerialPort* m_serialPort;
 };
+
+
+
 
 #endif // TrackingSensor_H

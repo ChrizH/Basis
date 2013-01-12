@@ -1,4 +1,4 @@
-//.pragma library // shared game state
+.pragma library // shared game state
 
 var trackingEnabled = true;
 
@@ -14,3 +14,20 @@ function getTrackingEnabled(){return trackingEnabled;}
 function getGameState() {return gameState;}
 //function setGameState(Object state){gameState = state;}
 
+var obstacleComponent = Qt.createComponent("Obstacle.qml");
+var obstacles = [];
+var game;
+function startGame(gameCanvas){
+     game = gameCanvas
+
+    //obstacles = new Array()
+    var obstacle = obstacleComponent.createObject()
+
+}
+
+
+
+// move the shit
+function tick(){
+
+}

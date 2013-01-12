@@ -8,15 +8,15 @@
  *************************************************************************/
 
 #include <QtGui>
-#include "ellipseitem.h"
+#include "moveable.h"
 
-EllipseItem::EllipseItem(QQuickItem *parent)
+MoveAble::MoveAble(QQuickItem *parent)
     : QQuickPaintedItem(parent)
 {
-    QTimer::singleShot(2000, this, SIGNAL(ready()));
+    //QTimer::singleShot(2000, this, SIGNAL(ready()));
 }
 
-void EllipseItem::paint(QPainter *painter)
+void MoveAble::paint(QPainter *painter)
 {
     painter->save();
     painter->setPen(Qt::NoPen);
@@ -25,12 +25,12 @@ void EllipseItem::paint(QPainter *painter)
     painter->restore();
 }
 
-const QColor EllipseItem::color() const
+const QColor MoveAble::color() const
 {
     return m_color;
 }
 
-void EllipseItem::setColor(const QColor &newColor)
+void MoveAble::setColor(const QColor &newColor)
 {
     if (m_color != newColor) {
         m_color = newColor;
@@ -38,3 +38,14 @@ void EllipseItem::setColor(const QColor &newColor)
         emit colorChanged();
     }
 }
+
+void MoveAble::move(const qreal &dx, const qreal &dy){
+    // check border
+    //&x+=&dx;
+    //setPosition(new QPointF(this->x()+dx,this->y()+dy));
+    this->xChanged();
+    this->yChanged();
+    this->update();
+}
+
+

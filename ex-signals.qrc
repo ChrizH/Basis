@@ -11,7 +11,6 @@
         <file>content/sound/Schluckauf.mp3</file>
         <file>content/sound/panik.mp3</file>
         <file>content/sound/babycry.mp3</file>
-        <file>content/Bullet.qml</file>
         <file>content/images/background.png</file>
         <file>content/images/background-puzzle.png</file>
         <file>content/images/bar.png</file>
@@ -30,5 +29,19 @@
         <file>content/images/knob.png</file>
         <file>content/images/switch-background.png</file>
         <file>content/Player.qml</file>
+        <file>timer.cpp</file>
+        <file>timer.h</file>
+        <file>moveable.cpp</file>
+        <file>moveable.h</file>
+        <file>content/Obstacle.qml</file>
+        <file>content/Ball.qml</file>
+        <file>content/ShaderDemo.qml</file>
+        <file>content/Slider.qml</file>
+        <file>content/images/background2.png</file>
+        <file>content/images/handle.png</file>
+        <file>content/images/metaballs.png</file>
+        <file>content/ShaderDemo2.qml</file>
+        <file>content/SmallSlider.qml</file>
+        <file>content/Frame.qml</file>
     </qresource>
 </RCC>

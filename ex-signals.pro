@@ -1,16 +1,20 @@
 QT       += quick
 QT       += multimedia
-HEADERS   = ellipseitem.h \
+HEADERS   = \
     sensor.h \
     serial.h \
     trackingSensor.h \
-    game.h
+    game.h \
+    timer.h \
+    moveable.h
 RESOURCES = ex-signals.qrc
-SOURCES   = main.cpp ellipseitem.cpp \
+SOURCES   = main.cpp \
     sensor.cpp \
     serial.cpp \
     trackingSensor.cpp \
-    game.cpp
+    game.cpp \
+    timer.cpp \
+    moveable.cpp
 
 # These next three lines makes the QML files show up in a section of their
 # own in Qt Creator.
@@ -19,12 +23,13 @@ qml.path = "."
 INSTALLS += qml
 QT+=serialport
 
+QML_IMPORT_PATH = ~/opt/qt5_new/qt5/Box2D_v2.2.1
+
 OTHER_FILES += \
     content/Button.qml \
     content/InfoBar.qml \
     content/Sensor.qml \
     content/SensorBar.qml \
-    content/Bullet.qml \
     content/images/background.png \
     content/images/background-puzzle.png \
     content/images/bar.png \
@@ -40,4 +45,11 @@ OTHER_FILES += \
     content/BottomBar.qml \
     content/logic.js \
     content/Switch.qml \
-    content/Player.qml
+    content/Player.qml \
+    content/Obstacle.qml \
+    content/ShaderDemo.qml \
+    content/Slider.qml \
+    content/Ball.qml \
+    content/ShaderDemo2.qml \
+    content/SmallSlider.qml \
+    content/Frame.qml

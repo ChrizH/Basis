@@ -41,9 +41,9 @@ Item {
                     container.state == "trackingOn" ?
                                     container.state ="trackingOff" : container.state="trackingOn"
                     if(container.state == "trackingOn")
-                        _trackingSensor.setTrackingEnable(true)
+                        _gameEngine.setTrackingEnable(true)
                     else
-                        _trackingSensor.setTrackingEnable(false)
+                        _gameEngine.setTrackingEnable(false)
                 }
             }
 
@@ -90,7 +90,7 @@ Item {
 
                     Button{
                         label: "Press"
-                        onClicked: _trackingSensor.setupConnection()
+                        onClicked: _gameEngine.trackingSensor.setupConnection()
                     }
                 }
 
@@ -101,7 +101,7 @@ Item {
 
                     Button{
                         label: "Press"
-                        onClicked: _trackingSensor.openConnection()
+                        onClicked: _gameEngine.trackingSensor.openConnection()
                     }
                 }
 
@@ -112,7 +112,7 @@ Item {
 
                     Button{
                         label: "Press"
-                        onClicked: _trackingSensor.closeConnection()
+                        onClicked: _gameEngine.trackingSensor.closeConnection()
                     }
                 }
            }

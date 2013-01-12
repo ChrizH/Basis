@@ -7,7 +7,7 @@ Rectangle {
     property string grColor
     property string soundSource
 
-    height: 50 + value//+ (value<0 ? 0 : (value - offset)*2)
+    height: 50 + (value<0 ? 0 : (value - offset)*2)
     gradient: Gradient {
         GradientStop {
             position: 0.00;

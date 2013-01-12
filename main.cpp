@@ -9,33 +9,28 @@
 
 #include <QGuiApplication>
 #include <QQuickView>
-#include "ellipseitem.h"
+#include "moveable.h"
 #include "trackingSensor.h"
 #include <QDebug>
-#
+#include "game.h"
 #include <QtQml>
-
-void initialize();
-void mainLoop();
+#include "timer.h"
 
 int main(int argc, char *argv[])
 {
-    TrackingSensor* trackSensor = new TrackingSensor();
-    //trackSensor->setupConnection();
-    //trackSensor->openConnection();
-    QGuiApplication app(argc, argv);
-    qmlRegisterType<EllipseItem>("Shapes", 3, 0, "Ellipse");
+    Game* game = new Game();
 
+    QGuiApplication app(argc, argv);
+    qmlRegisterType<MoveAble>("Shapes", 3, 0, "Ellipse");
+
+    qmlRegisterType<TrackingSensor>("TrackingSensor",1,0,"TrackingSensor");
+    qmlRegisterType<Timer>( "CustomComponents", 1, 0, "Timer" );
     QQuickView *view = new QQuickView;
     QQmlContext *context = view->engine()->rootContext();
-    context->setContextProperty("_trackingSensor",trackSensor);
+    context->setContextProperty("_gameEngine",game);
     view->setSource(QUrl("qrc:///tracking.qml"));
     view->show();
+
     return app.exec();
 }
 
-void mainLoop(){
-    while(1) {
-        sleep(1/30);
-    }
-}

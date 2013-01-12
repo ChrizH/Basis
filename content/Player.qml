@@ -5,6 +5,6 @@ Ellipse {
     width: 100
     height: 62
 
-
+    color:"green"
 
 }

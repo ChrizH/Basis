@@ -8,7 +8,7 @@ Item {
 
     signal openMenu()
     signal closeMenu()
-
+    signal startGame()
     //color:"gray"
     Image{
         source:"images/bar.png"
@@ -33,16 +33,25 @@ Item {
             id:menuButton
             label: "Open Menu"
             onClicked:{
-                parent.state == "open" ? parent.state = "close" : parent.state ="open"
                 if(parent.state=="open")
-                   container.openMenu()
+                   container.closeMenu()
                 else
-                    container.closeMenu()
-            }
+                    container.openMenu()
+                parent.state == "open" ? parent.state = "close" : parent.state ="open"
 
+            }
 
         }
 
+        Button{
+            id: startGame
+            label: "Start Game"
+            onClicked: {
+                _gameEngine.setGameOn(!_gameEngine.gameOn)
+            }
+        }
+
+        state:"open"
         states:[
             State{
                 name:"open"
