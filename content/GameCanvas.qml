@@ -5,7 +5,7 @@ import CustomComponents 1.0
 Item {
     id: gameContainer
     width: parent.width
-    height: parent.height - Settings.footerHeight - Settings.headerHeight
+    height: parent.height - (Settings.footerHeight + Settings.headerHeight)
     y: Settings.headerHeight
     property int squareSize: 64
     property int rows: 6

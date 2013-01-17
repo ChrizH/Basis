@@ -50,6 +50,19 @@ void Game::setTrackingEnable(const bool &newValue){
     }
 }
 
+
+bool Game::closeApp() {
+    return m_closeApp;
+}
+
+void Game::setCloseApp(const bool &close){
+    if(m_closeApp==close)
+        return;
+    m_closeApp = close;
+    emit closeAppChanged();
+}
+
+
 bool Game::gameOn() {
     return m_gameOn;
 }

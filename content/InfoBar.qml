@@ -1,27 +1,35 @@
 import QtQuick 2.0
 
 Item {
-    //height: childrenRect.height
-    //width: 100
-    //height: 62
+
+    Image{
+        source:"images/bar.png"
+        width: parent.width
+        height: parent.height
+        fillMode: Image.Tile
+    }
 
     Row{
             id: sensors
             anchors.left: parent.left
             anchors.leftMargin: 10
+            anchors.verticalCenter: parent.verticalCenter
             spacing: 10
 
             Text{
-                text: "L: "+(_gameEngine.trackingSensor.leftSensor.toString())
+                text: "X: "+(_gameEngine.trackingSensor.sensorX.value.toString())
                 font.bold: true
+                color:"white"
             }
             Text{
-                text: "R: "+(_gameEngine.trackingSensor.rightSensor.toString())
+                text: "Y: "+(_gameEngine.trackingSensor.sensorY.value.toString())
                 font.bold: true
+                color:"white"
             }
             Text{
-                text: "B: "+(_gameEngine.trackingSensor.bottomSensor.toString())
+                text: "Z: "+(_gameEngine.trackingSensor.sensorZ.value.toString())
                 font.bold: true
+                color:"white"
             }
 
 
@@ -32,10 +40,22 @@ Item {
             Text{
                 text: "Game On: "+(_gameEngine.gameOn == true ? "true":"false")
                 font.bold: true
+                color:"white"
             }
             Text{
                 text: "Controller: "+(_gameEngine.trackingEnable == true ? "Sensor":"Mouse")
                 font.bold: true
+                color:"white"
+            }
+            Text{
+                text: "Time: "+root.timePlayed.toString()
+                font.bold: true
+                color:"white"
+            }
+            Text{
+                text: "Errors: "+root.errors.toString()
+                font.bold: true
+                color:"white"
             }
         }
 
@@ -44,14 +64,17 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 10
             spacing: 10
+            anchors.verticalCenter: parent.verticalCenter
             Text{
                 text: "Comport: "+(_gameEngine.trackingSensor.comportAvailable == true ? "true":"false")
                 font.bold: true
+                color:"white"
             }
 
             Text{
                 text: "Connection open: "+(_gameEngine.trackingSensor.connectionAvailable==true?"true":"false")
                 font.bold: true
+                color:"white"
             }
         }
     }

@@ -4,125 +4,154 @@ import "logic.js" as Logic
 Item {
     id: container
     z: 2
-    // background image
-    Image{
-        source:"images/background.png"
-        width: parent.width
-        height: parent.height
-        fillMode: Image.Tile
-    }
 
     // MenuHeader
-    Text{
-        id: header
-        y: Settings.headerHeight
-        text: "3D Tracking\nMENU"
-        font.bold: true
-        font.pixelSize: 18
-        anchors.horizontalCenter: parent.horizontalCenter
-    }
-
-    Column{
-        id: optionContainer
-        y: Settings.headerHeight + 100
-        spacing: Settings.menuButtonSpacing
-        anchors.horizontalCenter: parent.horizontalCenter
-
-        Row{
-            spacing: Settings.menuButtonSpacing
-            Text{
-                text: "3D Tracking: "
-            }
-
-            Button{
-                id: trackEnableButton
-                label: "Off"
-                onClicked:{
-                    container.state == "trackingOn" ?
-                                    container.state ="trackingOff" : container.state="trackingOn"
-                    if(container.state == "trackingOn")
-                        _gameEngine.setTrackingEnable(true)
-                    else
-                        _gameEngine.setTrackingEnable(false)
-                }
-            }
-
-            /*Switch{
-                id:controlSwitch
-                on: false
-            }
-            Text{
-                text: (controlSwitch.on == true ? "On" : "Off")
-            }*/
+    Frame{
+        width: parent.width
+        height: parent.height
+        anchors.centerIn: parent
+        Text{
+            id: header
+            y: Settings.headerHeight
+            text: "3D Tracking\nMENU"
+            font.bold: true
+            font.pixelSize: 26
+            anchors.horizontalCenter: parent.horizontalCenter
         }
 
-        // options for 3DTracking = off
-            Column{
-                spacing: Settings.menuButtonSpacing
+        Frame{
+            width: parent.width*0.75
+            height: parent.height*0.5
+            anchors.centerIn: parent
 
-                id: trackingOffOptions
-                Text{
-                     text: "Game Controlling with Keyboard"
-                }
-                Text{
-                     text: "Use the arrow-keys for steering.. "
-                }
-
-
+            gradient: Gradient {
+                GradientStop { position: 0.0; color: "#ffffff" }
+                GradientStop { position: 1.0; color: "#eeeeee" }
             }
 
-        // options for 3DTracking = off
             Column{
-                id: trackingOnOptions
+                id: optionContainer
+                //width: parent.width
+                //y: Settings.headerHeight + 100
+                anchors.topMargin: 10
                 spacing: Settings.menuButtonSpacing
-                visible: false
-                Text{
-                    text: "Game Controlling with the 3D Sensor"
-                }
-                Text{
-                    text: "Connect the sensor with your device and play!"
-                }
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 Row{
+                    spacing: Settings.menuButtonSpacing
                     Text{
-                        text:"Check if connection is available"
+                        text: "3D Tracking: "
                     }
 
                     Button{
-                        label: "Press"
-                        onClicked: _gameEngine.trackingSensor.setupConnection()
+                        id: trackEnableButton
+                        label: "Off"
+                        onClicked:{
+                            container.state == "trackingOn" ?
+                                            container.state ="trackingOff" : container.state="trackingOn"
+                            if(container.state == "trackingOn")
+                                _gameEngine.setTrackingEnable(true)
+                            else
+                                _gameEngine.setTrackingEnable(false)
+                        }
                     }
                 }
 
-                Row{
-                    Text{
-                        text: "Open the connection"
+                // options for 3DTracking = off
+                Column{
+                        spacing: Settings.menuButtonSpacing
+
+                        id: trackingOffOptions
+                        Text{
+                             text: "Game Controlling with Mouse"
+                        }
+                        Text{
+                             text: "Drag and drop the ball.. "
+                        }
+
+
                     }
 
-                    Button{
-                        label: "Press"
-                        onClicked: _gameEngine.trackingSensor.openConnection()
-                    }
+                // options for 3DTracking = off
+                    Column{
+                        id: trackingOnOptions
+                        spacing: Settings.menuButtonSpacing
+                        visible: false
+                        Text{
+                            text: "Game Controlling with the 3D Sensor"
+                        }
+                        Text{
+                            text: "Connect the sensor with your device and play!"
+                        }
+                        Row{
+                            spacing: Settings.menuButtonSpacing*2
+                            Button{
+                                label: "Check ComPort"
+                                onClicked: _gameEngine.trackingSensor.setupConnection()
+                            }
+                            Image{
+                                visible: _gameEngine.trackingSensor.comportAvailable==true?true:false
+                                source: "images/Check-icon.png"
+                                width: 30; height: 30
+                                fillMode: Image.Stretch
+                            }
+                        }
+
+                        Row{
+                            spacing: Settings.menuButtonSpacing*2
+                            Button{
+                                visible: _gameEngine.trackingSensor.comportAvailable
+                                label: _gameEngine.trackingSensor.connectionAvailable==false?"Open Connection":"close Connection";
+                                onClicked:{
+                                    if(!_gameEngine.trackingSensor.connectionAvailable)
+                                        _gameEngine.trackingSensor.openConnection()
+                                    else
+                                        _gameEngine.trackingSensor.closeConnection()
+                                }
+                            }
+                            Image{
+                                visible: _gameEngine.trackingSensor.connectionAvailable==true?true:false;
+                                source: "images/Check-icon.png"
+                                width: 30; height: 30
+                                fillMode: Image.Stretch
+                            }
+                        }
+
+                        //Row{
+                          //  spacing: Settings.menuButtonSpacing
+                            Button{
+                                visible: _gameEngine.trackingSensor.connectionAvailable
+                                label: _gameEngine.trackingSensor.calibrating==false?"Start Calibrating":"Stop Calibrating"
+                                onClicked:{
+                                    _gameEngine.trackingSensor.setCalibrating(!_gameEngine.trackingSensor.calibrating);
+
+                                    if(!_gameEngine.trackingSensor.calibrating){
+                                        _gameEngine.trackingSensor.sensorX.assignCalibration();
+                                        _gameEngine.trackingSensor.sensorY.assignCalibration();
+                                        _gameEngine.trackingSensor.sensorZ.assignCalibration();
+                                        _gameEngine.trackingSensor.showCalResults();
+                                    }
+                                }
+                           // }
+                           /* Button{
+                                label: "Stop Calibrating"
+                                onClicked: {_gameEngine.trackingSensor.setCalibrating(false);
+
+                                }
+                            }*/
+                        }
+
+                   }
+
+
+
+
+                move: Transition {
+                      NumberAnimation { properties: "x,y"; duration: 500 }
                 }
 
-                Row{
-                    Text{
-                        text: "Closing connection"
-                    }
-
-                    Button{
-                        label: "Press"
-                        onClicked: _gameEngine.trackingSensor.closeConnection()
-                    }
-                }
-           }
-
-            move: Transition {
-                  NumberAnimation { properties: "x,y"; duration: 500 }
-            }
-
-
-
+               }
+        }
     }
 
     states:[

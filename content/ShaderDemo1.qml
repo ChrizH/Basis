@@ -221,7 +221,7 @@ Rectangle {
                 uniform lowp float goodySize;
                 uniform lowp float shining;
                 uniform lowp bool collision;
-                void main() {                        
+                void main() {
 
                     lowp vec4 pixelColor = vec4(0.0, 0.0, 0.0, 0.0);
                     lowp vec4 obs1Color = vec4(0.0, 0.6, 0.8, 1.0);

@@ -5,24 +5,21 @@ import "content"
 
 import "content/logic.js" as Logic
 Item {
-    id: container
-    width: 1024; height: 768
-    property var gameState: Settings.gameStates.RUNNING
-    // backgroundimage
+    id: root
+    width: 1400; height: 768
+    //property var gameState: Settings.gameStates.RUNNING
 
-    /*Obstacle{
-        z:2
-        id: bullet
-        x:10;y:100
-        //color:"black"
-        visible:true
-    }*/
+    property int timePlayed: 0
+    property int errors: 0
+
+    // backgroundimage
+    SystemPalette { id: activePalette }
 
     InfoBar{
         z:2
         id: headerBar
-        anchors.top: container.top
-        anchors.topMargin: 10
+        anchors.top: root.top
+        //anchors.topMargin: 10
         width: parent.width
         height: Settings.headerHeight
     }
@@ -37,13 +34,12 @@ Item {
     Menu{
         id: menu
         y: Settings.headerHeight
-        width: parent.width/1.6
-        height: parent.height - Settings.headerHeight - Settings.footerHeight
-        anchors.top: headerBar.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
+        width: parent.width/2
+        height: (parent.height - Settings.headerHeight - Settings.footerHeight)*0.75
+        //anchors.top: headerBar.bottom
+        anchors.centerIn:parent
         visible: false
     }
-
 
     BottomBar{
         z:2

@@ -2,15 +2,19 @@ import QtQuick 2.0
 import "../settings.js" as Settings
 Item {
     id: container
-    width: 30; height: 50
+    //width: 30; height: 50
     z: 10
-    property bool alive: true
+
+    property bool collision: false
+
+
+
     //property int ballSize
    // color:"white"
 
     // controlling with mouse - if local steering
 
-
+    //source: "images/blue.png"
 
     MouseArea {
         anchors.fill: parent

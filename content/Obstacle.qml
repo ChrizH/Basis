@@ -1,9 +1,9 @@
 import QtQuick 2.0
 import Shapes 3.0
 import "../settings.js" as Settings
-Item {
+Image {
     width: Settings.blocksize;height:Settings.blocksize
-    id:container
+    /*id:container
     property real shaderShining
     property bool enable
     signal lot
@@ -15,14 +15,9 @@ Item {
         shaderEffect.source=source
         //shaderEffect.source=sourceItem;
     }*/
-
-    Image{
-        id: image
-        source:"images/red.png"
-        width: parent.width; height:parent.height
-        fillMode: Image.Stretch
-    }
-    ShaderEffect {
+    z:10
+    source:"images/red.png"
+    /*ShaderEffect {
         id: shaderEffect
         property variant source:  ShaderEffectSource {sourceItem:image}
         blending: true
@@ -57,6 +52,6 @@ Item {
 
             }
         "
-    }
+    }*/
 
 }

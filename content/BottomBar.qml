@@ -9,6 +9,7 @@ Item {
     signal openMenu()
     signal closeMenu()
     signal startGame()
+    signal quit();
     //color:"gray"
     Image{
         source:"images/bar.png"
@@ -25,7 +26,7 @@ Item {
         Button{
             label: "Quit"
             onClicked: {
-                Qt.quit()
+                _gameEngine.setCloseApp(true);
             }
         }
 
@@ -52,6 +53,14 @@ Item {
             label: _gameEngine.gameOn == true ? "Pause":"Continue"
             onClicked: {
                 _gameEngine.setGameOn(!_gameEngine.gameOn)
+                if(container.state=="open")
+                    container.closeMenu()
+            }
+        }Button{
+            id: createBlocks
+            label:"Create Blocks"
+            onClicked:{
+                Logic.startGame()
             }
         }
 
@@ -69,11 +78,4 @@ Item {
         ]
 
     }
-
-    /*Audio{      // for audio reconfigure QT with gstreamer support
-            id: audio
-            source:"sound/Todesschrei.mp3"
-            volume: 1.0
-           // autoPlay:true
-    }*/
 }

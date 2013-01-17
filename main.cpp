@@ -15,6 +15,9 @@
 #include "game.h"
 #include <QtQml>
 #include "timer.h"
+#include "sensor.h"
+#include <QtOpenGL>
+#include <qtopenglglobal.h>
 
 int main(int argc, char *argv[])
 {
@@ -24,10 +27,12 @@ int main(int argc, char *argv[])
     qmlRegisterType<MoveAble>("Shapes", 3, 0, "Ellipse");
 
     qmlRegisterType<TrackingSensor>("TrackingSensor",1,0,"TrackingSensor");
+    qmlRegisterType<Sensor>("Sensor",1,0,"Sensor");
     qmlRegisterType<Timer>( "CustomComponents", 1, 0, "Timer" );
     QQuickView *view = new QQuickView;
     QQmlContext *context = view->engine()->rootContext();
     context->setContextProperty("_gameEngine",game);
+
     view->setSource(QUrl("qrc:///tracking.qml"));
     view->show();
 

@@ -1,5 +1,6 @@
 QT       += quick
 QT       += multimedia
+QT      += opengl
 HEADERS   = \
     sensor.h \
     serial.h \
@@ -28,7 +29,6 @@ QML_IMPORT_PATH = ~/opt/qt5_new/qt5/Box2D_v2.2.1
 OTHER_FILES += \
     content/Button.qml \
     content/InfoBar.qml \
-    content/Sensor.qml \
     content/SensorBar.qml \
     content/images/background.png \
     content/images/background-puzzle.png \
@@ -47,9 +47,10 @@ OTHER_FILES += \
     content/Switch.qml \
     content/Player.qml \
     content/Obstacle.qml \
-    content/ShaderDemo.qml \
     content/Slider.qml \
     content/Ball.qml \
     content/ShaderDemo2.qml \
     content/SmallSlider.qml \
-    content/Frame.qml
+    content/Frame.qml \
+    content/SensorVisu.qml \
+    content/ShaderDemo1.qml

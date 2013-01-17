@@ -4,7 +4,6 @@
         <file>content/InfoBar.qml</file>
         <file>content/Button.qml</file>
         <file>content/SensorBar.qml</file>
-        <file>content/Sensor.qml</file>
         <file>content/sound/Todesschrei.mp3</file>
         <file>content/sound/schreiweib.mp3</file>
         <file>content/sound/Schnarchen01.mp3</file>
@@ -43,5 +42,10 @@
         <file>content/ShaderDemo2.qml</file>
         <file>content/SmallSlider.qml</file>
         <file>content/Frame.qml</file>
+        <file>content/SensorVisu.qml</file>
+        <file>content/images/Check-icon.png</file>
+        <file>content/images/background-space.jpg</file>
+        <file>content/images/background-space2.jpg</file>
+        <file>content/images/background-space3.jpg</file>
     </qresource>
 </RCC>
