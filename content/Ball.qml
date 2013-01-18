@@ -21,7 +21,7 @@ Item {
         enabled: !_gameEngine.trackingEnable
         //anchors.margins: -ballSize
         onPositionChanged: {
-            var posInView = container.mapToItem(shaderContainer, mouse.x-ballSize, mouse.y-ballSize)
+            var posInView = container.mapToItem(shader1Container, mouse.x-ballSize, mouse.y-ballSize)
             container.x = posInView.x;
             container.y = posInView.y;
         }

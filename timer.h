@@ -15,12 +15,15 @@ public:
     ~Timer();
     void setInterval( int msec );
     int interval();
-    void setTimerOn(bool &on);
+
     bool timerOn();
 signals:
     void timeout();
     void intervalChanged();
     void timerOnChanged();
+
+public slots:
+    void setTimerOn(bool &on);
     
 private:
     QTimer* m_timer;

@@ -7,136 +7,97 @@ Item {
     width: parent.width
     height: parent.height - (Settings.footerHeight + Settings.headerHeight)
     y: Settings.headerHeight
-    property int squareSize: 64
-    property int rows: 6
-    property int cols: 4
-    //property Item canvas: grid
-    property int score: 0
-    property int coins: 100
-    property int lives: 3
 
+    Image{
+        source:"images/background2.png"
+        anchors.fill:parent
+        fillMode: Image.Stretch
+    }
 
-
-
-    /*ShaderEffectSource{
-        id: shaderSource
-        sourceItem:backgroundImage
-    }*/
-
-
-
-    /*Image{
-        id: backgroundImage
-        source:"images/background-puzzle.png"
+    ShaderDemo1{
+        id: demo1
+        z:100
         width: parent.width
         height: parent.height
-        fillMode: Image.Tile
-
-
-    Obstacle{
-        id: obstacle
-        x:300
-        y: 200
-        //shaderShining: slider.value
-        enable:true
-        parentImage:backgroundImage
-        shaderSource: shaderSource
+        y:1000
+        //visible:false
     }
-
-    Timer{
-         id: timer
-         interval: 100
-
-         onTimeout: {
-             moveObstacles()
-             //console.debug("hallo")
-         //content/face-smile.png}
-              }
-     }
-
-    function moveObstacles(){
-        player.x=player.x+1
-    }
-
-    /*ShaderDemo2{
-        anchors.centerIn: parent
-    }*/
-
 
     ShaderDemo2{
-        z:1
+        id:demo2
+       z:200
+       y:1000
         //anchors.centerIn: parent
         width: parent.width
         height: parent.height
+        //visible:false
     }
 
-    /*Slider {
-        z:10
-        id: slider
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 16
-        width: parent.width
-        minimum: 0.1
-        value: 0.55
-        maximum: 1.0
-        text: "<<<  Adjust Shining  >>>"
-    }*/
 
-    /*Timer{
-        interval: 16
-        running: true
-        repeat: true
-        onTriggered: Logic.tick()
-    }*/
-
-    /*SensorBar{
-        z:2
-        id: sensors
-        width: container.width
-        anchors.centerIn: container
+    function newGame(){
+        if(gameContainer.state=="demo1")
+            demo1.newGame()
+        else if(gameContainer.state=="demo2")
+            demo2.newGame()
+        else
+            console.debug("gamestate error")
     }
 
-    Player{
-        x:30
-        y:100
-        id: player
-    }/*
+    function holdGame(){
+        if(gameContainer.state=="demo1")
+            demo1.active=false
+        else if(gameContainer.state=="demo2")
+            demo2.active=false
+        else
+            console.debug("gamestate error")
+    }
 
-    Row{
-        x: 400
-        y: 400
-        id: obstacles
-        Repeater{
-            model: 3
-            Obstacle{
+    function reactivateGame(){
+        if(state=="demo1")
+            demo1.active=true
+        else if(gameContainer.state=="demo2")
+            demo2.active=true
+        else
+            console.debug("gamestate error")
+    }
 
-            }
+
+
+    states:[
+        State{
+            name:"demo1"
+            PropertyChanges{target: demo1; y:0}
+            PropertyChanges{target: demo2; y:1000}
+            //PropertyChanges{target: demo1; active:true}
+            //PropertyChanges{target: demo2; active:false}
+            //PropertyChanges{target: demo1; enabled:true}
+            //PropertyChanges{target: demo2; enabled:false}
+            //PropertyChanges{target: demo1; visible:true}
+            //PropertyChanges{target: demo2; visible:false}
+        },
+        State{
+            name:"demo2"
+            PropertyChanges{target: demo1; y:1000}
+            PropertyChanges{target: demo2; y:0}
+            //PropertyChanges{target: demo1; active:false}
+            //PropertyChanges{target: demo2; active:true}
+            //PropertyChanges{target: demo1; enabled:false}
+            //PropertyChanges{target: demo2; enabled:true}
+            //PropertyChanges{target: demo1; visible:false}
+            //PropertyChanges{target: demo2; visible:true}
         }
-    }
 
-   // function createObstacles(){
-    //    var
-   // }
+    ]
 
-   /* function freshState() {
-        lives = 3
-        coins = 100
-        score = 0
-        waveNumber = 0
-        waveProgress = 0
-        gameOver = false
-        gameRunning = false
-        towerMenu.shown = false
-        helpButton.comeBack();
-    }
-    Timer {
-        interval: 16
-        running: true
-        repeat: true
-        onTriggered: Logic.tick()
-    }
 
-*/
+    transitions: [
+       Transition {
+           PropertyAnimation { target: demo1
+                               properties: "y"; duration: 500 }
+           PropertyAnimation { target: demo2
+                               properties: "y"; duration: 500 }
+       } ]
+
 
 
 }

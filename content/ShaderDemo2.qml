@@ -1,6 +1,5 @@
 import QtQuick 2.0
-import CustomComponents 1.0
-import "logic.js" as Logic
+//import CustomComponents 1.0
 import "../settings.js" as Settings
 Rectangle {
     id: shaderContainer
@@ -8,31 +7,108 @@ Rectangle {
     property real ballSize: Settings.playerSize
     property real obstacleSize: Settings.obstacleSize
     property real goodySize: Settings.goodySize
-    enabled: _gameEngine.gameOn
-
+    property int points: 0
+    property int errors:0
+    property bool gameOver: false
+    //enabled: _gameEngine.gameOn
+    property bool active:false;
     Image {
         id: backgroundImage
         source: "images/background-space2.jpg"
         anchors.fill: parent
         fillMode: Image.Stretch
     }
+    // Info Text
+
+    Text{
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.margins: 15
+        text:"DEMO2\nPoints: "+points.toString()+"\n"+
+                      "Time: "+timer.timePlayed.toString()+
+             "\nLive: "+(Math.round(100-Settings.playerMinSize/ballSize*100)).toString()+
+                    "\nActive: "+active.toString()+
+             "\nGame Over: "+gameOver.toString()+
+             "\nBallSize: "+ballSize
+        font.pixelSize: 27
+        color: "white"
+        font.bold: true
+    }
+    states:[
+        State{
+            name:"game"
+            PropertyChanges {
+                target: gameOverText
+                visible: false
+            }
+        },
+        State{
+            name:"gameOver"
+            PropertyChanges {
+                target: gameOverText
+                visible: true
+            }
+        }
+    ]
+
+    Text{
+        z:1000
+        id: gameOverText
+        text:"Game Over"
+        anchors.centerIn: root.Center
+        font.pixelSize: 38
+        color: "white"
+        font.bold: true
+        visible:false
+    }
+
+    function newGame(){
+        timer.timePlayed= 0
+        errors= 0
+        points=0
+        timer.loopCounter= 0
+        timer.collDetect=0
+        timer.goodyCath=0
+        ballSize = Settings.playerSize
+        ballItem1.x=50
+        ballItem1.y=50
+        active=true
+        gameOverText.visible=false
+        shaderContainer.state="game"
+    }
+
+    function gameOver(){
+        active=false
+        shaderContainer.state="gameOver"
+        gameOver=true
+    }
+
 
     // main timer - for updating
     Timer{
         id: timer
         interval: 25
-        timerOn: _gameEngine.gameOn
+        running: active
+        repeat:true
+
         property int loopCounter: 0
         property int collDetect:0
         property int goodyCath:0
-        onTimeout:{
+        property int timePlayed:0
+
+        onTriggered:{
+
+            // check game over - ball < originalsize/factor
+            if(ballSize<20)
+                gameOver()
 
             // check goody collision
             if((timePlayed-goodyCath)>1)
             if(shaderEffect.checkDistance(shaderEffect.goody1,goodySize)){
-                goodyCath=root.timePlayed;
+                goodyCath=timePlayed;
                 if(ballSize<200)
-                ballSize=ballSize*1.5
+                    ballSize=ballSize*1.5
+                points=points+1
             }
 
             // check obstacle collision
@@ -40,9 +116,9 @@ Rectangle {
                 if(shaderEffect.checkDistance(shaderEffect.obstacle1,obstacleSize)
                         ||shaderEffect.checkDistance(shaderEffect.obstacle2,obstacleSize))
                 {
-                    collDetect=root.timePlayed
+                    collDetect=timePlayed
                     ballItem1.collision=true
-                    root.errors=root.errors+1
+                    errors=errors+1
                     ballSize=ballSize/2
                 }
                 else
@@ -50,7 +126,7 @@ Rectangle {
 
             // count time
             if(loopCounter==40){
-                root.timePlayed++
+                timePlayed++
                 loopCounter=0
             }else
                 loopCounter=loopCounter+1
@@ -156,13 +232,13 @@ Rectangle {
         // obstacle movement
         SequentialAnimation on animY1{
             loops: Animation.Infinite
-            running: _gameEngine.gameOn
+            running: active
             NumberAnimation { to: shaderContainer.height/2; duration: 5000; easing.type: Easing.OutQuad }
             NumberAnimation { to: 120; duration: 5000; easing.type: Easing.OutBounce }
         }
         SequentialAnimation on animX1 {
             loops: Animation.Infinite
-            running: _gameEngine.gameOn
+            running: active
             NumberAnimation { to: shaderContainer.width/2-ballSize; duration:5000; easing.type: Easing.InOutExpo }
             NumberAnimation { to: 120; duration: 5000; easing.type: Easing.InElastic
             }
@@ -170,15 +246,15 @@ Rectangle {
         // goody movement
         SequentialAnimation on animY2{
             loops: Animation.Infinite
-            running: _gameEngine.gameOn
-            NumberAnimation { to: shaderContainer.height-goodySize-Settings.headerHeight + Math.sin(root.timePlayed); duration: 5000; easing.type: Easing.InElastic }
+            running: active
+            NumberAnimation { to: shaderContainer.height-goodySize-Settings.headerHeight; duration: 5000; easing.type: Easing.InElastic }
             //PauseAnimation {duration: 500}
             NumberAnimation { to: 120; duration: 5000; easing.type: Easing.SineCurve }
 
         }
         SequentialAnimation on animX2 {
             loops: Animation.Infinite
-            running: _gameEngine.gameOn
+            running: active
             NumberAnimation { to: shaderContainer.width-goodySize; duration: 3000; easing.type: Easing.Linear }
             NumberAnimation { to: goodySize; duration: 3000; easing.type: Easing.Linear
             }
@@ -196,18 +272,11 @@ Rectangle {
                 hit = true
             }
 
-            /*console.debug("Nr: "+nr)
-            console.debug("Distance: "+dist)
-            console.debug("Hit: "+hit)
-            console.debug("BallItem1.y: "+ballItem1.y)
-            console.debug("BallBig.y: "+obstacle.y)
-            console.debug("\n")
-            */
             return hit
         }
 
 
-        fragmentShader:
+        fragmentShader:active==true?
             " varying highp vec2 qt_TexCoord0;
                 uniform lowp sampler2D source;
                 uniform lowp float qt_Opacity;
@@ -259,7 +328,7 @@ Rectangle {
 
                     highp float a = smoothstep(1.0 - shining, 1.0, pixelColor.a);
                     gl_FragColor = vec4(pixelColor.rgb * a, 0.0);
-                }"
+                }":""
 
     }
 }

@@ -37,18 +37,18 @@ Item {
         Row{
             anchors.centerIn: parent
             spacing: 10
-            Text{
+            /*Text{
                 text: "Game On: "+(_gameEngine.gameOn == true ? "true":"false")
                 font.bold: true
                 color:"white"
-            }
+            }*/
             Text{
                 text: "Controller: "+(_gameEngine.trackingEnable == true ? "Sensor":"Mouse")
                 font.bold: true
                 color:"white"
             }
-            Text{
-                text: "Time: "+root.timePlayed.toString()
+            /*Text{
+                text: "Time: "+root.root.timePlayed.toString()
                 font.bold: true
                 color:"white"
             }
@@ -56,7 +56,7 @@ Item {
                 text: "Errors: "+root.errors.toString()
                 font.bold: true
                 color:"white"
-            }
+            }*/
         }
 
        Row{

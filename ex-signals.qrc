@@ -4,41 +4,21 @@
         <file>content/InfoBar.qml</file>
         <file>content/Button.qml</file>
         <file>content/SensorBar.qml</file>
-        <file>content/sound/Todesschrei.mp3</file>
-        <file>content/sound/schreiweib.mp3</file>
-        <file>content/sound/Schnarchen01.mp3</file>
-        <file>content/sound/Schluckauf.mp3</file>
-        <file>content/sound/panik.mp3</file>
-        <file>content/sound/babycry.mp3</file>
-        <file>content/images/background.png</file>
-        <file>content/images/background-puzzle.png</file>
         <file>content/images/bar.png</file>
-        <file>content/images/blue.png</file>
-        <file>content/images/but-game-new.png</file>
-        <file>content/images/but-menu.png</file>
-        <file>content/images/green.png</file>
-        <file>content/images/red.png</file>
-        <file>content/images/yellow.png</file>
         <file>settings.js</file>
         <file>content/GameCanvas.qml</file>
         <file>content/Menu.qml</file>
         <file>content/BottomBar.qml</file>
         <file>content/logic.js</file>
-        <file>content/Switch.qml</file>
-        <file>content/images/knob.png</file>
-        <file>content/images/switch-background.png</file>
-        <file>content/Player.qml</file>
         <file>timer.cpp</file>
         <file>timer.h</file>
         <file>moveable.cpp</file>
         <file>moveable.h</file>
         <file>content/Obstacle.qml</file>
         <file>content/Ball.qml</file>
-        <file>content/ShaderDemo.qml</file>
+        <file>content/ShaderDemo1.qml</file>
         <file>content/Slider.qml</file>
         <file>content/images/background2.png</file>
-        <file>content/images/handle.png</file>
-        <file>content/images/metaballs.png</file>
         <file>content/ShaderDemo2.qml</file>
         <file>content/SmallSlider.qml</file>
         <file>content/Frame.qml</file>
@@ -47,5 +27,6 @@
         <file>content/images/background-space.jpg</file>
         <file>content/images/background-space2.jpg</file>
         <file>content/images/background-space3.jpg</file>
+        <file>content/images/handle.png</file>
     </qresource>
 </RCC>

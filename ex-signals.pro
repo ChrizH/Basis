@@ -24,7 +24,7 @@ qml.path = "."
 INSTALLS += qml
 QT+=serialport
 
-QML_IMPORT_PATH = ~/opt/qt5_new/qt5/Box2D_v2.2.1
+#QML_IMPORT_PATH = ~/opt/qt5_new/qt5/Box2D_v2.2.1
 
 OTHER_FILES += \
     content/Button.qml \
@@ -43,9 +43,6 @@ OTHER_FILES += \
     settings.js \
     content/Menu.qml \
     content/BottomBar.qml \
-    content/logic.js \
-    content/Switch.qml \
-    content/Player.qml \
     content/Obstacle.qml \
     content/Slider.qml \
     content/Ball.qml \
@@ -53,4 +50,5 @@ OTHER_FILES += \
     content/SmallSlider.qml \
     content/Frame.qml \
     content/SensorVisu.qml \
-    content/ShaderDemo1.qml
+    content/ShaderDemo1.qml \
+    content/logic.js

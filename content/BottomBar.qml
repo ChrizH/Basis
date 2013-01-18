@@ -8,8 +8,9 @@ Item {
 
     signal openMenu()
     signal closeMenu()
-    signal startGame()
+    signal continue_()
     signal quit();
+    signal newGame()
     //color:"gray"
     Image{
         source:"images/bar.png"
@@ -40,27 +41,28 @@ Item {
                 }
                 else{
                     container.openMenu()
-                    _gameEngine.setGameOn(false)
+                    //_gameEngine.setGameOn(false)
                 }
                 parent.state == "open" ? parent.state = "close" : parent.state ="open"
-
             }
-
         }
 
-        Button{
-            id: startGame
+        /*Button{
+            id: continueButton
             label: _gameEngine.gameOn == true ? "Pause":"Continue"
             onClicked: {
                 _gameEngine.setGameOn(!_gameEngine.gameOn)
-                if(container.state=="open")
+                if(container.state=="open"){
                     container.closeMenu()
+                    container.state="close"
+                }
             }
-        }Button{
-            id: createBlocks
-            label:"Create Blocks"
+        }*/Button{
+            id: newGame
+            label:"New Game"
             onClicked:{
-                Logic.startGame()
+                //Logic.startGame()
+                container.newGame()
             }
         }
 

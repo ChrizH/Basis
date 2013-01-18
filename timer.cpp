@@ -6,6 +6,7 @@ Timer::Timer(QObject *parent) :
     m_timer(new QTimer(this))
 {
     connect( m_timer, SIGNAL( timeout() ), this, SIGNAL( timeout() ) );
+    m_timerOn=false;
 }
 
 Timer::~Timer(){
