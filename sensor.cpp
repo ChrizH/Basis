@@ -26,6 +26,10 @@ void Sensor::assignCalibration(){
 }
 
 void Sensor::calibrate(int val){
+    // set value to current value
+    m_value = val;
+    emit valueChanged();
+
     // find min&max
     //if(val>200){    // error check
         if(m_calMinHelper > val)

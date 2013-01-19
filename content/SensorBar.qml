@@ -1,35 +1,22 @@
 import QtQuick 2.0
 import QtMultimedia 5.0
-import "logic.js" as Logic
 import TrackingSensor 1.0
 Item {
-    //anchors.centerIn: parent
-    //anchors.horizontalCenter: parent.horizontalCenter
-    height: 300
-    //color: "black"
+    height: 130
     Row{
         anchors.centerIn: parent
         spacing: 20
-        Sensor{
+        Rectangle{
             id: left
-            grColor: "red"
-            offset: 141
-            value: (_gameEngine.trackingEnable == true ? _gameEngine.trackingSensor.leftSensor : 190)
-            soundSource: "sound/Todesschrei.mp3"
+            color:"red"
+            width: 30
+            height: (_gameEngine.trackingSensor.sensorX.value-280)*2
         }
-        Sensor{
-            id: bottom
-            grColor: "green"
-            offset: 142
-            value: _gameEngine.trackingEnable == true ? _gameEngine.trackingSensor.bottomSensor : 160
-            soundSource: "sound/Todesschrei.mp3"
-        }
-        Sensor{
+        Rectangle{
             id: right
-            grColor: "blue"
-            offset: 123
-            value: _gameEngine.trackingEnable == true ? _gameEngine.trackingSensor.rightSensor : 220
-            soundSource: "sound/Todesschrei.mp3"
+            color: "green"
+            width: 30
+            height: (_gameEngine.trackingSensor.sensorY.value-300)*2
         }
     }
 

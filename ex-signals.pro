@@ -51,4 +51,5 @@ OTHER_FILES += \
     content/Frame.qml \
     content/SensorVisu.qml \
     content/ShaderDemo1.qml \
-    content/logic.js
+    content/logic.js \
+    content/ShaderDemo3.qml

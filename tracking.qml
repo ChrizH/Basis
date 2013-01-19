@@ -26,9 +26,10 @@ Item {
 
     Menu{
         id: menu
-        anchors.verticalCenter: parent.verticalCenter
+        //anchors.verticalCenter: parent.verticalCenter
+        anchors.top: headerBar.bottom
         width: parent.width*0.6
-        height: (parent.height - Settings.headerHeight - Settings.footerHeight)*0.8
+        height: (parent.height - Settings.headerHeight - Settings.footerHeight)
         visible: true
 
         onPlayDemo1:{
@@ -36,6 +37,9 @@ Item {
         }
         onPlayDemo2:{
             gameCanvas.state="demo2"
+        }
+        onPlayDemo3:{
+            gameCanvas.state="demo3"
         }
     }
 

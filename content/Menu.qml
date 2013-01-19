@@ -7,6 +7,7 @@ Item {
     anchors.horizontalCenter: parent.horizontalCenter
     signal playDemo1()
     signal playDemo2()
+    signal playDemo3()
 
     // MenuHeader
     Frame{
@@ -57,7 +58,7 @@ Item {
                     Row{
                         spacing: Settings.menuButtonSpacing
                         Text{
-                            text:"Shoot em all!"
+                            text:"Shoot em up!"
                         }
 
                         Button{
@@ -67,6 +68,7 @@ Item {
                                 container.playDemo1()
                                 d2activ.visible=false
                                 d1activ.visible=true
+                                d3activ.visible=false
                             }
                         }
                         Image{
@@ -91,12 +93,39 @@ Item {
                                 container.playDemo2()
                                 d2activ.visible=true
                                 d1activ.visible=false
+                                d3activ.visible=false
                             }
                         }
                         Image{
                             id: d2activ
                             anchors.verticalCenter: parent.verticalCenter
                             visible: false
+                            source: "images/Check-icon.png"
+                            width: 30; height: 30
+                            fillMode: Image.Stretch
+                        }
+                    }
+
+                    Row{
+                        spacing: Settings.menuButtonSpacing
+                        Text{
+                            text:"Check the dark side of the force!"
+                        }
+
+                        Button{
+                            label:"Demo3"
+                            anchors.verticalCenter: parent.verticalCenter
+                            onClicked:{
+                                container.playDemo3()
+                                d1activ.visible=false
+                                d2activ.visible=false
+                                d3activ.visible=true
+                            }
+                        }
+                        Image{
+                            id: d3activ
+                            visible: false
+
                             source: "images/Check-icon.png"
                             width: 30; height: 30
                             fillMode: Image.Stretch
@@ -213,14 +242,12 @@ Item {
                                 }
                             }
 
-                            //Row{
-                              //  spacing: Settings.menuButtonSpacing
                                 Button{
                                     visible: _gameEngine.trackingSensor.connectionAvailable
                                     label: _gameEngine.trackingSensor.calibrating==false?"Start Calibrating":"Stop Calibrating"
                                     onClicked:{
                                         _gameEngine.trackingSensor.setCalibrating(!_gameEngine.trackingSensor.calibrating);
-
+                                        calValues.visible = !calValues.visible
                                         if(!_gameEngine.trackingSensor.calibrating){
                                             _gameEngine.trackingSensor.sensorX.assignCalibration();
                                             _gameEngine.trackingSensor.sensorY.assignCalibration();
@@ -228,13 +255,16 @@ Item {
                                             _gameEngine.trackingSensor.showCalResults();
                                         }
                                     }
-                               // }
-                               /* Button{
-                                    label: "Stop Calibrating"
-                                    onClicked: {_gameEngine.trackingSensor.setCalibrating(false);
 
-                                    }
-                                }*/
+                            }
+                            // show cal values
+                            Frame{
+                                id: calValues
+                                visible: false
+                                height: 150
+                                SensorBar{
+                                    anchors.centerIn: parent
+                                }
                             }
 
                        }

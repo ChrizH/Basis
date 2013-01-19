@@ -33,12 +33,24 @@ Item {
         //visible:false
     }
 
+    ShaderDemo3{
+        id:demo3
+       z:300
+       y:1000
+        //anchors.centerIn: parent
+        width: parent.width
+        height: parent.height
+        //visible:false
+    }
+
 
     function newGame(){
         if(gameContainer.state=="demo1")
             demo1.newGame()
         else if(gameContainer.state=="demo2")
             demo2.newGame()
+        else if(gameContainer.state=="demo3")
+            demo3.newGame()
         else
             console.debug("gamestate error")
     }
@@ -48,6 +60,8 @@ Item {
             demo1.active=false
         else if(gameContainer.state=="demo2")
             demo2.active=false
+        else if(gameContainer.state=="demo3")
+            demo3.active=false
         else
             console.debug("gamestate error")
     }
@@ -57,6 +71,8 @@ Item {
             demo1.active=true
         else if(gameContainer.state=="demo2")
             demo2.active=true
+        else if(gameContainer.state=="demo3")
+            demo3.active=true
         else
             console.debug("gamestate error")
     }
@@ -68,23 +84,19 @@ Item {
             name:"demo1"
             PropertyChanges{target: demo1; y:0}
             PropertyChanges{target: demo2; y:1000}
-            //PropertyChanges{target: demo1; active:true}
-            //PropertyChanges{target: demo2; active:false}
-            //PropertyChanges{target: demo1; enabled:true}
-            //PropertyChanges{target: demo2; enabled:false}
-            //PropertyChanges{target: demo1; visible:true}
-            //PropertyChanges{target: demo2; visible:false}
+            PropertyChanges{target: demo3; y:1000}
         },
         State{
             name:"demo2"
             PropertyChanges{target: demo1; y:1000}
             PropertyChanges{target: demo2; y:0}
-            //PropertyChanges{target: demo1; active:false}
-            //PropertyChanges{target: demo2; active:true}
-            //PropertyChanges{target: demo1; enabled:false}
-            //PropertyChanges{target: demo2; enabled:true}
-            //PropertyChanges{target: demo1; visible:false}
-            //PropertyChanges{target: demo2; visible:true}
+            PropertyChanges{target: demo3; y:1000}
+        },
+        State{
+            name:"demo3"
+            PropertyChanges{target: demo1; y:1000}
+            PropertyChanges{target: demo2; y:1000}
+            PropertyChanges{target: demo3; y:0}
         }
 
     ]
@@ -95,6 +107,8 @@ Item {
            PropertyAnimation { target: demo1
                                properties: "y"; duration: 500 }
            PropertyAnimation { target: demo2
+                               properties: "y"; duration: 500 }
+           PropertyAnimation { target: demo3
                                properties: "y"; duration: 500 }
        } ]
 

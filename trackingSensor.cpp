@@ -128,12 +128,18 @@ void TrackingSensor::readData()
         return;
     }
 
-    if(value->contains("##")){
-        m_sensorCounter=2;
-        value->replace(3,2,"");
-        qDebug() << "new cycle ("<<*value<<")";
-        data = value->toUtf8();
-    }
+    if(value->contains("##"))
+        if(value->length()==5){
+            m_sensorCounter=1;
+            value->replace(3,2,"");
+            //qDebug() << "new cycle ("<<*value<<")";
+            data = value->toUtf8();
+        }
+        else{
+            qDebug() << "Reading error";
+            m_sensorCounter++;
+            return;
+        }
 
     int calcVal = data.toInt();
 
@@ -149,15 +155,15 @@ void TrackingSensor::readData()
             qDebug() << "X: " << calcVal;
             break;
         case 1:     // y    bottom
-            m_sensorCounter++;
+            m_sensorCounter=0;
             if(!m_calibrating)
                 m_sensorY->setValue(calcVal);
             else
                 m_sensorY->calibrate(calcVal);
 
-            qDebug() << "Y: " << calcVal;
+            qDebug() << "\t\tY: " << calcVal;
             break;
-        case 2:     // z    right
+        /*case 2:     // z    right
             m_sensorCounter=0;
             if(!m_calibrating)
                 m_sensorZ->setValue(calcVal);
@@ -165,12 +171,12 @@ void TrackingSensor::readData()
                 m_sensorZ->calibrate(calcVal);
 
             qDebug() << "Z: " << calcVal;
-            break;
+            break;*/
         default:
             m_sensorCounter=0;
             break;
     }
-    qDebug() <<"\n";
+    qDebug() <<"\n---------------";
 
 }
 

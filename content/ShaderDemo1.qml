@@ -26,24 +26,62 @@ Rectangle {
         anchors.right: parent.right
         anchors.margins: 15
         text:"DEMO1\nPoints: "+points.toString()+"\n"+
-             "Time: "+((timer.timePlayed)/4).toString()+
-             "\nLive: "+(Math.round(100-Settings.playerMinSize/ballSize*100)).toString()+
-             "\nActive: "+active.toString()
+             "Time: "+(Math.round((timer.timePlayed)/4)).toString()+
+             "\nLive: "+(Math.round(100-Settings.playerMinSize/ballSize*100)).toString()+"%"
         font.pixelSize: 27
         color: "white"
         font.bold: true
     }
 
     Text{
-        z:1000
+        z:1001
         id: gameOverText
         text:"Game Over"
-        anchors.centerIn: parent
+        anchors.centerIn: shader1Container
         font.pixelSize: 38
         color: "white"
         font.bold: true
         visible:false
     }
+    state:"wait"
+    states:[
+        State{
+            name:"game"
+            PropertyChanges {
+                target: gameOverText
+                visible: false
+            }
+        },
+        State{
+            name:"gameOver"
+            PropertyChanges {
+                target: gameOverText
+                visible: true
+            }
+        }/*,
+        State{
+            name:"shoot"
+            PropertyChanges{target: ballItem2; x:shader1Container.width    }
+            PropertyChanges{ target: ballItem2; speedLocked:true }
+        },
+        State{
+            name:"wait"
+            PropertyChanges{ target: ballItem2; x:ballItem1.x }
+            PropertyChanges{ target: ballItem2; speedLocked:false }
+        }*/
+    ]
+
+
+    /*transitions:[
+        Transition{
+            to: "shoot"
+            SequentialAnimation{
+                NumberAnimation{target: ballItem2; property: x; duration: ballItem2.bulletSpeed; easing.type: Easing.Linear}
+                PropertyAction{target: shader1Container; property: state; value:"wait"}
+            }
+
+        }
+    ]*/
 
     function newGame(){
         timer.timePlayed= 0
@@ -52,16 +90,22 @@ Rectangle {
         timer.loopCounter= 0
         timer.collDetect=0
         timer.goodyCath=0
+        timer.obs1LastHit=0
+        timer.obs2LastHit=0
         ballSize = Settings.playerSize
+        obstacle1Size = Settings.obstacleSize
+        obstacle2Size = Settings.obstacleSize
         ballItem1.x=50
         ballItem1.y=50
         active=true
         gameOverText.visible=false
+        shaderContainer.state="game"
     }
 
-    function gameOver(){
+    function setGameOver(){
         active=false
-        gameOverText.visible=true
+        shader1Container.state="gameOver"
+        gameOver=true
     }
 
     // main timer - for updating
@@ -77,8 +121,11 @@ Rectangle {
         property int obs2LastHit:0
         property int goodyCath:0
         property int timePlayed:0
-        property int helpTime:0     // counts time in 500ms values
         onTriggered:{
+
+            // check game over - ball < originalsize/factor
+            if(ballSize<Settings.playerMinSize*2)
+               shader1Container.setGameOver()
 
             // check goody collision
             if((timePlayed-goodyCath)>1)
@@ -95,48 +142,44 @@ Rectangle {
                 {
                     obs1LastHit=timePlayed
                     points = points+1
-                    obstacle1Size*0.9
+                    obstacle1Size=obstacle1Size*0.5
                 }
             if((timePlayed-obs2LastHit)>2)
                 if(shaderEffect.checkDistance2(shaderEffect.obstacle2,ballItem2,obstacle2Size,ballSize/2))
                 {
                     obs2LastHit=timePlayed
                     points=points+1
-                    obstacle2Size*0.9
+                    obstacle2Size=obstacle2Size*0.5
                 }
 
 
             // check obstacle collision
             if((timePlayed-collDetect)>4)
-                if(shaderEffect.checkDistance(shaderEffect.obstacle1,obstacleSize)
-                        ||shaderEffect.checkDistance(shaderEffect.obstacle2,obstacleSize))
+                if(shaderEffect.checkDistance(shaderEffect.obstacle1,obstacle1Size)
+                        ||shaderEffect.checkDistance(shaderEffect.obstacle2,obstacle2Size))
                 {
                     collDetect=timePlayed
                     ballItem1.collision=true
                     errors=errors+1
                     ballSize=ballSize*0.75
-                    // check game over - ball < originalsize/factor
-                    if(ballSize<Settings.playerMinSize)
-                        gameOver()
+
                 }
                 else
                     ballItem1.collision=false
 
-            /*if(loopCounter == 20){       // 500ms
-                helpTimee++
-            }*/
 
             // count time
-            if(loopCounter==10){           // counts in 500ms
+            if(loopCounter==10){           // counts in 250ms
                 timePlayed++
                 loopCounter=0
             }else
                 loopCounter=loopCounter+1
 
-            if((timePlayed/4)%5==0)            // obstacles  grow every 10s..
+            if((timePlayed/4)%2==0)            // obstacles  grow every 2s..
             {
-                obstacle1Size=obstacle1Size*2
-                obstacle2Size=obstacle2Size*2
+                obstacle1Size=obstacle1Size+5
+                obstacle2Size=obstacle2Size+5
+
             }
 
 
@@ -158,12 +201,12 @@ Rectangle {
         value: 0.55
         maximum: 2.0
         text: "<<<  Adjust Shining  >>>"
-        visible: !_gameEngine.trackingEnable
+        //visible: !_gameEngine.trackingEnable
     }
 
     Ball {
         id: ballItem1
-        x: 4; y: shader1Container.height/2-ballSize*2
+        x: ballSize/2; y: shader1Container.height/2-ballSize*2
 
         function controlWithSensor(){
 
@@ -195,30 +238,45 @@ Rectangle {
         x: ballItem1.x; y: ballItem1.y
         //width:2*ballSize; height:2*ballSize;
         property bool shooting: false
-        property int bulletSpeed: 100
+        property int bulletSpeed: 600
         property int minSpeed: 1000
+        property bool speedLocked: false    // new speed @ next shot
+        //property int posYatShoot:ballItem1.y
+
 
         function shoot(){
-            var dX = _gameEngine.trackingSensor.sensorX.value
-            var rangeX = _gameEngine.trackingSensor.sensorX.maxValue-_gameEngine.trackingSensor.sensorX.minValue - 1
-            var factor = minSpeed/rangeX
-            if(dX>0){
-                shooting=true
-                // set bullet speed
-                bulletSpeed=minSpeed-rangeX*factor
+
+            if(!speedLocked){
+                console.debug("\t\t\tSpeed locked: "+speedLocked+"\tSpeed: "+bulletSpeed+"\tShooting: "+shooting)
+                var dX = _gameEngine.trackingSensor.sensorX.value
+                var rangeX = _gameEngine.trackingSensor.sensorX.maxValue-_gameEngine.trackingSensor.sensorX.minValue - 1
+                var factor = minSpeed/rangeX
+
+                if(dX>0){
+                    ballItem2.bulletSpeed=1300-dX*factor
+                    shooting=true
+                    //shader1Container.state="shoot"
+                    // set bullet speed
+
+                    //console.debug("===Bullet Speed: "+ballItem2.bulletSpeed + "\t Factor: "+factor + "\t RangeX: "+rangeX)
+                }
+                else
+                    shooting=false
             }
-            else
-                shooting=false
         }
-
-        SequentialAnimation on x{
-            loops: Animation.Infinite
-            running: ballItem2.shooting
-            NumberAnimation { to: shader1Container.width; duration: ballItem2.bulletSpeed; easing.type: Easing.Linear }
-            NumberAnimation { to: 0; duration: 1; easing.type: Easing.Linear }
-        }
+        //Behavior on bulletSpeed{
+            SequentialAnimation on x{
+                //loops: Animation.
+                running: ballItem2.shooting
+                //PropertyAction{target: ballItem2; property: speedLocked; value: true}
+                NumberAnimation { to: ballItem1.x; duration: 1; easing.type: Easing.Linear }
+                NumberAnimation { to: shader1Container.width; duration: ballItem2.bulletSpeed; easing.type: Easing.Linear }
+                NumberAnimation { to: ballItem1.x; duration: 1; easing.type: Easing.Linear }
+                PauseAnimation {duration: 50}
+                //PropertyAction{target: ballItem2; property: speedLocked; value: false}
+            }
+          //}
       }
-
 
     ShaderEffect {
 
@@ -295,13 +353,6 @@ Rectangle {
                 hit = true
             }
 
-            /*console.debug("Nr: "+nr)
-            console.debug("Distance: "+dist)
-            console.debug("Hit: "+hit)
-            console.debug("BallItem1.y: "+ballItem1.y)
-            console.debug("BallBig.y: "+obstacle.y)
-            console.debug("\n")
-            */
             return hit
         }
 
@@ -325,8 +376,8 @@ Rectangle {
                 void main() {
 
                     lowp vec4 pixelColor = vec4(0.0, 0.0, 0.0, 0.0);
-                    lowp vec4 obs1Color = vec4(0.0, 0.6, 0.8, 1.0);
-                    lowp vec4 obs2Color = vec4(.2, 0.2, 0.8, 1.0);
+                    lowp vec4 obs1Color = vec4(1.0, 0.6, 0.2, 1.0);
+                    lowp vec4 obs2Color = vec4(.8, 0.9, 0.1, 1.0);
                     lowp vec4 goodyColor = vec4(1.0, 1.0, 1.0, 1.0);
 
                     lowp vec4 playerColor = vec4(0.0, 0.8, 0.2, 1.0);

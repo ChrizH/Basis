@@ -28,5 +28,7 @@
         <file>content/images/background-space2.jpg</file>
         <file>content/images/background-space3.jpg</file>
         <file>content/images/handle.png</file>
+        <file>content/ShaderDemo3.qml</file>
+        <file>content/images/background-space4.jpg</file>
     </qresource>
 </RCC>
